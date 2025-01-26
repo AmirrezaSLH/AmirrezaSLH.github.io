@@ -53,15 +53,28 @@
             background-color: #0056b3;
         }
     </style>
+    <script>
+        async function sendQuestion() {
+            const question = document.getElementById('question-box').value;
+            const response = await fetch('http://127.0.0.1:5000/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: question }),
+            });
+
+            const data = await response.json();
+            alert(`Response: ${data.answer}`);
+        }
+    </script>
 </head>
 <body>
     <h1>Welcome to Amirreza's Personal Page</h1>
     <div class="question-section">
         <label for="question-box">Ask any Question about Amirreza:</label>
         <textarea id="question-box" placeholder="Type your questions here..."></textarea>
-    </div>
-    <div class="question-section">
-        <button type="submit">Submit</button>
+        <button type="button" onclick="sendQuestion()">Submit</button>
     </div>
 </body>
 </html>

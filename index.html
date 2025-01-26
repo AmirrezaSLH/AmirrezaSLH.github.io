@@ -7,7 +7,8 @@
     <style>
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             height: 100vh;
             margin: 0;
@@ -17,10 +18,34 @@
         h1 {
             font-size: 3em;
             color: #333;
+            margin-top: 10%;
+        }
+        .question-section {
+            margin-top: 5%;
+            text-align: center;
+        }
+        .question-section label {
+            font-size: 1.2em;
+            color: #555;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .question-section textarea {
+            width: 300px;
+            height: 100px;
+            font-size: 1em;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
         }
     </style>
 </head>
 <body>
     <h1>Welcome to Amirreza's Personal Page</h1>
+    <div class="question-section">
+        <label for="question-box">Ask any Question about Amirreza:</label>
+        <textarea id="question-box" placeholder="Type your questions here..."></textarea>
+    </div>
 </body>
 </html>

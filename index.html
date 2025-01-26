@@ -52,130 +52,16 @@
         .question-section button:hover {
             background-color: #0056b3;
         }
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 1000;
-        }
-        .popup label {
-            display: block;
-            font-size: 1em;
-            margin-bottom: 10px;
-        }
-        .popup input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-        }
-        .popup button {
-            padding: 10px 20px;
-            font-size: 1em;
-            color: white;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .popup button:hover {
-            background-color: #0056b3;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 999;
-        }
     </style>
-    <script>
-    let apiKey = '';
-
-    function showPopup() {
-        document.querySelector('.overlay').style.display = 'block';
-        document.querySelector('.popup').style.display = 'block';
-    }
-
-    function closePopup() {
-        document.querySelector('.overlay').style.display = 'none';
-        document.querySelector('.popup').style.display = 'none';
-    }
-
-    async function saveApiKey() {
-        apiKey = document.getElementById('api-key').value;
-        if (apiKey) {
-            // Send API key to the backend
-            const response = await fetch('http://127.0.0.1:5000/save_api_key', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ api_key: apiKey }),
-            });
-
-            if (response.ok) {
-                alert('API Key saved successfully!');
-                closePopup();
-            } else {
-                alert('Failed to save API key.');
-            }
-        } else {
-            alert('Please enter a valid API key.');
-        }
-    }
-
-    async function sendQuestion() {
-        const question = document.getElementById('question-box').value;
-        if (!apiKey) {
-            alert('Please enter an API key first.');
-            showPopup();
-            return;
-        }
-
-        const response = await fetch('http://127.0.0.1:5000/query', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ query: question }),
-        });
-
-        const data = await response.json();
-        alert(`Response: ${data.answer}`);
-    }
-
-    window.onload = function () {
-        showPopup();
-    };
-</script>
-
 </head>
 <body>
     <h1>Welcome to Amirreza's Personal Page</h1>
     <div class="question-section">
         <label for="question-box">Ask any Question about Amirreza:</label>
         <textarea id="question-box" placeholder="Type your questions here..."></textarea>
-        <button type="submit">Submit</button>
     </div>
-
-    <div class="overlay"></div>
-    <div class="popup">
-        <label for="api-key">Enter your API Key:</label>
-        <input type="text" id="api-key" placeholder="Enter API key here...">
-        <button onclick="saveApiKey()">Save</button>
+    <div class="question-section">
+        <button type="submit">Submit</button>
     </div>
 </body>
 </html>

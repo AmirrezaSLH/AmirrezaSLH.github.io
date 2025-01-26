@@ -32,12 +32,25 @@
         }
         .question-section textarea {
             width: 300px;
-            height: 100px;
+            height: 50px;
             font-size: 1em;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             resize: none;
+        }
+        .question-section button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .question-section button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -46,6 +59,7 @@
     <div class="question-section">
         <label for="question-box">Ask any Question about Amirreza:</label>
         <textarea id="question-box" placeholder="Type your questions here..."></textarea>
+        <button type="submit">Submit</button>
     </div>
 </body>
 </html>

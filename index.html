@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amirreza's Personal Page</title>
+    <title>Amirreza's Live Resume</title>
     <style>
         body {
             display: flex;
@@ -71,38 +71,23 @@
     <div class="response-section" id="response-section"></div>
 
     <script>
-        async function sendQuestion() {
-            const questionBox = document.getElementById("question-box");
-            const responseSection = document.getElementById("response-section");
-            const question = questionBox.value;
+        function sendQuestion() {
+            const userInput = document.getElementById("question-box").value;
 
-            if (!question.trim()) {
-                responseSection.textContent = "Please type a question before submitting.";
-                return;
-            }
-
-            try {
-                // Replace with your AWS EC2 FastAPI server URL
-               const serverUrl = "http://3.145.104.112:8000/endpoint";
-
-                const response = await fetch(serverUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ question }),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                responseSection.textContent = data.answer || "No response received.";
-            } catch (error) {
-                console.error("Error:", error);
-                responseSection.textContent = "An error occurred while sending the question.";
-            }
+            fetch("http://127.0.0.1:5000/chatbot", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ input: userInput })
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("response-section").innerText = "Response: " + data;
+            })
+            .catch(error => {
+                document.getElementById("response-section").innerText = "Error: " + error;
+            });
         }
     </script>
 </body>

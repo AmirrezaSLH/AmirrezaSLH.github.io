@@ -18,10 +18,10 @@
         h1 {
             font-size: 3em;
             color: #333;
-            margin-top: 10%;
+            margin-top: 5%;
         }
         .question-section {
-            margin-top: 5%;
+            margin-top: 2%;
             text-align: center;
         }
         .question-section label {
@@ -31,8 +31,8 @@
             margin-bottom: 10px;
         }
         .question-section textarea {
-            width: 300px;
-            height: 50px;
+            width: 400px;
+            height: 80px;
             font-size: 1em;
             padding: 10px;
             border: 1px solid #ccc;
@@ -54,40 +54,77 @@
         }
         .response-section {
             margin-top: 20px;
+            width: 60%;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             font-size: 1.2em;
             color: #333;
+            text-align: left;
+            white-space: pre-line; /* Preserve line breaks */
+            display: none; /* Hide until response is ready */
         }
     </style>
 </head>
 <body>
     <h1>Welcome to Amirreza's Personal Page</h1>
+    
     <div class="question-section">
         <label for="question-box">Ask any Question about Amirreza:</label>
         <textarea id="question-box" placeholder="Type your questions here..."></textarea>
     </div>
+    
     <div class="question-section">
         <button type="submit" onclick="sendQuestion()">Submit</button>
     </div>
+    
     <div class="response-section" id="response-section"></div>
 
     <script>
         function sendQuestion() {
             const userInput = document.getElementById("question-box").value;
+            const responseBox = document.getElementById("response-section");
 
-            fetch("http://127.0.0.1:5000/chatbot", {
+            // Show loading text
+            responseBox.style.display = "block";
+            responseBox.innerHTML = "<i>Loading response...</i>";
+
+            fetch("https://3.144.37.207:5000/chatbot", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ input: userInput })
             })
-            .then(response => response.text())
+            .then(response => response.json())  // Expect JSON response
             .then(data => {
-                document.getElementById("response-section").innerText = "Response: " + data;
+                if (data.response) {
+                    responseBox.innerHTML = `<strong>Response:</strong><br>`;
+                    displayWordByWord(data.response, responseBox, 50); // Typing effect with 50ms delay
+                } else {
+                    responseBox.innerHTML = `<strong>Error:</strong> No response received.`;
+                }
             })
             .catch(error => {
-                document.getElementById("response-section").innerText = "Error: " + error;
+                responseBox.innerHTML = `<strong>Error:</strong> ${error}`;
             });
+        }
+
+        function displayWordByWord(text, element, speed) {
+            const words = text.split(" ");
+            let index = 0;
+            element.innerHTML += "<br>"; // Start new line for response
+
+            function addNextWord() {
+                if (index < words.length) {
+                    element.innerHTML += words[index] + " ";
+                    index++;
+                    setTimeout(addNextWord, speed);
+                }
+            }
+
+            addNextWord();
         }
     </script>
 </body>

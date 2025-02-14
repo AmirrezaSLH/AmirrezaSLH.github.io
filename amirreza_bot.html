@@ -68,10 +68,10 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to Amirreza's Personal Page</h1>
+    <h1>Welcome, I am Amirreza's Personal Assistant</h1>
     
     <div class="question-section">
-        <label for="question-box">Ask any Question about Amirreza:</label>
+        <label for="question-box">How can I assist you with Amirreza's professional background?</label>
         <textarea id="question-box" placeholder="Type your questions here..."></textarea>
     </div>
     
@@ -90,7 +90,7 @@
             responseBox.style.display = "block";
             responseBox.innerHTML = "<i>Loading response...</i>";
 
-            fetch("https://3.144.37.207:5000/chatbot", {
+            fetch("http://chatbot.amirrezaslh.com/chatbot", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
